@@ -739,60 +739,9 @@ export default async function createConfigAsync() {
             content: '😉',
           },
           // Right
-          {
-            type: 'docsVersionDropdown',
-            position: 'right',
-            dropdownActiveClassDisabled: true,
-            dropdownItemsAfter: [
-              {
-                type: 'html',
-                value: '<hr class="dropdown-separator">',
-              },
-              {
-                type: 'html',
-                className: 'dropdown-archived-versions',
-                value: '<b>Archived versions</b>',
-              },
-              ...ArchivedVersionsDropdownItems.map(
-                ([versionName, versionUrl]) => ({
-                  label: versionName,
-                  href: versionUrl,
-                }),
-              ),
-              {
-                href: 'https://v1.docusaurus.io',
-                label: '1.x.x',
-              },
-              {
-                type: 'html',
-                value: '<hr class="dropdown-separator">',
-              },
-              {
-                to: '/versions',
-                label: 'All versions',
-              },
-            ],
-          },
-          {
-            type: 'localeDropdown',
-            position: 'right',
-            dropdownItemsAfter: [
-              {
-                type: 'html',
-                value: '<hr style="margin: 0.3rem 0;">',
-              },
-              {
-                href: 'https://github.com/facebook/docusaurus/issues/3526',
-                label: 'Help Us Translate',
-              },
-            ],
-          },
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            position: 'right',
-            className: 'header-github-link',
-            'aria-label': 'GitHub repository',
-          },
+  
+
+
         ]
           // TODO fix type
           .filter(Boolean) as NonNullable<
