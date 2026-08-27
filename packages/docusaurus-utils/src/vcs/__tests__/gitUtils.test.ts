@@ -396,6 +396,24 @@ describe('commit info APIs', () => {
         }
       `);
     });
+
+    it('preserves author names containing commas', async () => {
+      const {repoDir, git} = await createGitRepoEmpty();
+
+      await git.commitFile('comma-author.txt', {
+        fileContent: 'content',
+        commitMessage: 'Commit by author with comma in name',
+        commitDate: '2024-01-15',
+        commitAuthor: 'Doe, Jane <jane@example.com>',
+      });
+
+      const filesInfo = await getGitRepositoryFilesInfo(repoDir);
+      const fileInfo = filesInfo.get('comma-author.txt');
+
+      expect(fileInfo).toBeDefined();
+      expect(fileInfo!.creation.author).toBe('Doe, Jane');
+      expect(fileInfo!.lastUpdate.author).toBe('Doe, Jane');
+    });
   });
 });
 
@@ -423,7 +441,8 @@ describe('getGitRepoRoot', () => {
 
   it('returns Docusaurus repo for cwd=__dirname', async () => {
     const cwd = __dirname;
-    await expect(getGitRepoRoot(cwd)).resolves.toMatch(/docusaurus$/);
+    const repoRoot = path.resolve(cwd, '..', '..', '..', '..', '..');
+    await expect(getGitRepoRoot(cwd)).resolves.toEqual(repoRoot);
   });
 
   it('rejects for cwd=repoDir/doesNotExist', async () => {
@@ -784,6 +803,20 @@ describe('VSC strategies', () => {
         timestamp: new Date('2020-06-19').getTime(),
       });
       await expect(vcs.getFileCreationInfo(filepath)).resolves.toEqual({
+        author: 'Seb',
+        timestamp: new Date('2020-06-19').getTime(),
+      });
+    });
+
+    // see https://github.com/facebook/docusaurus/issues/12322
+    it('can read repo file info from a relative path', async () => {
+      const {vcs} = await initVsc();
+
+      await expect(vcs.getFileLastUpdateInfo('rootFile.md')).resolves.toEqual({
+        author: 'Seb',
+        timestamp: new Date('2020-06-19').getTime(),
+      });
+      await expect(vcs.getFileCreationInfo('rootFile.md')).resolves.toEqual({
         author: 'Seb',
         timestamp: new Date('2020-06-19').getTime(),
       });

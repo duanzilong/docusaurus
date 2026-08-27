@@ -20,18 +20,28 @@
     }
   ],
   "ignorePaths": [
+    ".claude",
+    ".codex",
+    "**/dist/**",
+    "**/lib/**",
+    "**/build/**",
+    "**/.docusaurus/**",
+    "**/__fixtures__/**",
     "CHANGELOG.md",
     "CHANGELOG-v*.md",
     "patches",
     "packages/docusaurus-theme-translations/locales",
     "packages/docusaurus-plugin-ideal-image/src/theme/IdealImageLegacy",
     "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
     "yarn.lock",
     "project-words.txt",
     "__snapshots__",
     "admin/scripts",
     "website/src/data/users.tsx",
     "website/src/data/tweets.tsx",
+    "website/community/2-resources.mdx",
     "website/docusaurus.config.localized.json",
     "website/_dogfooding/_pages tests/diagrams.mdx",
     "*.xyz",
@@ -43,6 +53,6 @@
     "*.min.*",
     "jest/vendor"
   ],
-  "ignoreRegExpList": ["Email", "Urls", "#[\\w-]*"],
+  "ignoreRegExpList": ["Email", "Urls", "#[\\w-]*", "\\u\\{[0-9A-F]{4}\\}"],
   "enableFiletypes": ["mdx"]
 }
